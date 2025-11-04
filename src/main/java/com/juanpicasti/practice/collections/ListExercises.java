@@ -28,8 +28,9 @@ public class ListExercises {
      * @return an ArrayList containing all the elements
      */
     public List<String> createAndPopulateArrayList(String... elements) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        List<String> list = new ArrayList<>();
+        Collections.addAll(list, elements);
+        return list;
     }
 
     /**
@@ -45,8 +46,10 @@ public class ListExercises {
      * @throws IllegalArgumentException if list is null or index is out of bounds
      */
     public <T> T getElementAtIndex(List<T> list, int index) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (list == null || index < 0 || index >= list.size()) {
+            throw new IllegalArgumentException();
+        }
+        return list.get(index);
     }
 
     /**
@@ -62,8 +65,10 @@ public class ListExercises {
      * @throws IllegalArgumentException if list is null
      */
     public <T> boolean removeElement(List<T> list, T element) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (list == null) {
+            throw new IllegalArgumentException();
+        }
+        return list.remove(element);
     }
 
     // ==================== SEARCHING ====================
