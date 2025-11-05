@@ -28,9 +28,15 @@ public class AdvancedCollectionsExercises {
      * @return a list containing elements in the order they were removed from queue
      */
     public List<String> processQueue(String... elements) {
-        // TODO: Implement this method
-        // Hint: Use LinkedList as Queue implementation
-        throw new UnsupportedOperationException("Not implemented yet");
+        Queue<String> q = new LinkedList<>(Arrays.asList(elements));
+
+        List<String> result = new ArrayList<>();
+        String e;
+        while ((e = q.poll()) != null) {
+            result.add(e);
+        }
+        return result;
+
     }
 
     /**
@@ -47,9 +53,15 @@ public class AdvancedCollectionsExercises {
      * @return a Deque with elements added alternately (first element at first, second at last, etc.)
      */
     public Deque<String> createDeque(String... elements) {
-        // TODO: Implement this method
-        // Hint: Use ArrayDeque
-        throw new UnsupportedOperationException("Not implemented yet");
+        Deque<String> d = new ArrayDeque<>();
+        for (int i = 0; i < elements.length; i++) {
+            if (i % 2 == 0) {
+                d.addFirst(elements[i]);
+            } else {
+                d.addLast(elements[i]);
+            }
+        }
+        return d;
     }
 
     // ==================== PRIORITY QUEUE ====================
@@ -66,8 +78,13 @@ public class AdvancedCollectionsExercises {
      * @return a list of numbers in ascending order (as they come out of PriorityQueue)
      */
     public List<Integer> sortWithPriorityQueue(Integer... numbers) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        Queue<Integer> pq = new PriorityQueue<>(Arrays.asList(numbers));
+        List<Integer> l = new ArrayList<>();
+        Integer i;
+        while ((i = pq.poll()) != null) {
+            l.add(i);
+        }
+        return l;
     }
 
     /**
@@ -81,8 +98,14 @@ public class AdvancedCollectionsExercises {
      * @return a list of numbers in descending order (max-heap behavior)
      */
     public List<Integer> createMaxHeap(Integer... numbers) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        Queue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
+        pq.addAll(Arrays.asList(numbers));
+        List<Integer> l = new ArrayList<>();
+        Integer i;
+        while ((i = pq.poll()) != null) {
+            l.add(i);
+        }
+        return l;
     }
 
     // ==================== SORTING ====================
@@ -98,8 +121,8 @@ public class AdvancedCollectionsExercises {
      * @throws IllegalArgumentException if list is null
      */
     public void sortList(List<Integer> list) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (list == null) throw new IllegalArgumentException();
+        Collections.sort(list);
     }
 
     /**
@@ -115,9 +138,8 @@ public class AdvancedCollectionsExercises {
      * @throws IllegalArgumentException if list is null
      */
     public void sortByLength(List<String> list) {
-        // TODO: Implement this method
-        // Hint: Comparator.comparingInt(String::length).thenComparing(Comparator.naturalOrder())
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (list == null) throw new IllegalArgumentException();
+        list.sort(Comparator.comparingInt(String::length).thenComparing(Comparator.naturalOrder()));
     }
 
     // ==================== ITERATION PATTERNS ====================
@@ -139,8 +161,8 @@ public class AdvancedCollectionsExercises {
      * @return count of strings with length > minLength, or 0 if list is null
      */
     public int countLongStrings(List<String> list, int minLength) {
-        // TODO: Implement this method using any iteration pattern you prefer
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (list == null) return 0;
+        return list.stream().filter(s -> s.length() > minLength).mapToInt(s -> 1).sum();
     }
 
     // ==================== COLLECTION CONVERSIONS ====================
@@ -160,8 +182,7 @@ public class AdvancedCollectionsExercises {
      * @return a new sorted list with duplicates removed, or empty list if input is null
      */
     public List<String> removeDuplicatesAndSort(List<String> list) {
-        // TODO: Implement this method
-        // Hint: Use TreeSet to both remove duplicates and sort
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (list == null) return new ArrayList<>();
+        return new ArrayList<>(new HashSet<>(list)).stream().sorted().toList();
     }
 }

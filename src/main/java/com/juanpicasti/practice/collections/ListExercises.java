@@ -1,8 +1,8 @@
 package com.juanpicasti.practice.collections;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -85,8 +85,8 @@ public class ListExercises {
      * @return the index of first occurrence, or -1 if not found or list is null
      */
     public <T> int findFirstIndex(List<T> list, T element) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (list == null) return -1;
+        return list.indexOf(element);
     }
 
     /**
@@ -100,8 +100,8 @@ public class ListExercises {
      * @return true if list contains element, false otherwise (or if list is null)
      */
     public <T> boolean containsElement(List<T> list, T element) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (list == null) return false;
+        return list.contains(element);
     }
 
     // ==================== MODIFICATION ====================
@@ -120,9 +120,12 @@ public class ListExercises {
      * @throws IllegalArgumentException if list is null or indices are invalid
      */
     public <T> List<T> extractSublist(List<T> list, int fromIndex, int toIndex) {
-        // TODO: Implement this method
-        // Hint: Create a new ArrayList from the subList to avoid view issues
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (list == null || fromIndex < 0 || toIndex > list.size() || toIndex < fromIndex) throw new IllegalArgumentException();
+        return list.subList(
+                fromIndex,
+                toIndex
+        );
+
     }
 
     /**
@@ -138,8 +141,10 @@ public class ListExercises {
      * @throws IllegalArgumentException if list is null or index is out of bounds
      */
     public <T> T replaceElement(List<T> list, int index, T newElement) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (list == null || index < 0 || index >= list.size()) {
+            throw new IllegalArgumentException();
+        }
+        return list.set(index, newElement);
     }
 
     /**
@@ -153,8 +158,8 @@ public class ListExercises {
      * @throws IllegalArgumentException if list is null
      */
     public <T> void clearList(List<T> list) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (list == null) throw new IllegalArgumentException();
+        list.clear();
     }
 
     // ==================== CONVERSIONS ====================
@@ -170,8 +175,10 @@ public class ListExercises {
      * @return a String array containing all elements, or empty array if list is null
      */
     public String[] convertListToArray(List<String> list) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (list == null) return new String[0];
+        return list.toArray(
+               String[]::new
+        );
     }
 
     /**
@@ -194,6 +201,27 @@ public class ListExercises {
     public String compareListPerformance() {
         // TODO: Implement this method
         // Hint: Use System.nanoTime() to measure performance
-        throw new UnsupportedOperationException("Not implemented yet");
+        List<Integer> arrayList = new ArrayList<>();
+        List<Integer> linkedList = new LinkedList<>();
+        for (int i = 0; i < 1000; i++) {
+            arrayList.add(i);
+            linkedList.add(i);
+        }
+        long alBefore = System.nanoTime();
+        Integer i = arrayList.get(500);
+        long alAfter = System.nanoTime();
+        long alTime = alAfter - alBefore;
+
+        long llBefore = System.nanoTime();
+        Integer j = linkedList.get(500);
+        long llAfter = System.nanoTime();
+        long llTime = llAfter - llBefore;
+        System.out.println(llTime);
+
+        System.out.println(alTime);
+        if (llTime > alTime) {
+            return "ArrayList";
+        }
+        return "LinkedList";
     }
 }

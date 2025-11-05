@@ -1,10 +1,6 @@
 package com.juanpicasti.practice.collections;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.Collection;
+import java.util.*;
 
 /**
  * Map Exercises - HashMap and TreeMap
@@ -32,8 +28,10 @@ public class MapExercises {
      * @throws IllegalArgumentException if arrays are null or have different lengths
      */
     public Map<String, Integer> createHashMap(String[] keys, Integer[] values) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (keys == null || values == null || keys.length != values.length) throw new IllegalArgumentException();
+        Map<String, Integer> map = new HashMap<>();
+        for (int i = 0; i < keys.length; i ++) map.put(keys[i], values[i]);
+        return map;
     }
 
     /**
@@ -49,8 +47,8 @@ public class MapExercises {
      * @return the value associated with key, or defaultValue if key absent or map is null
      */
     public <K, V> V getValueOrDefault(Map<K, V> map, K key, V defaultValue) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (map == null) return defaultValue;
+        return map.getOrDefault(key, defaultValue);
     }
 
     /**
@@ -65,8 +63,8 @@ public class MapExercises {
      * @return true if map contains key, false otherwise (or if map is null)
      */
     public <K, V> boolean hasKey(Map<K, V> map, K key) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (map == null) return false;
+        return map.containsKey(key);
     }
 
     /**
@@ -81,8 +79,8 @@ public class MapExercises {
      * @return true if map contains value, false otherwise (or if map is null)
      */
     public <K, V> boolean hasValue(Map<K, V> map, V value) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (map == null) return false;
+        return map.containsValue(value);
     }
 
     /**
@@ -97,8 +95,8 @@ public class MapExercises {
      * @throws IllegalArgumentException if map is null
      */
     public <K, V> V removeKey(Map<K, V> map, K key) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (map == null) throw new IllegalArgumentException();
+        return map.remove(key);
     }
 
     // ==================== ITERATION ====================
@@ -114,8 +112,8 @@ public class MapExercises {
      * @return a Set containing all keys, or empty set if map is null
      */
     public <K, V> Set<K> getAllKeys(Map<K, V> map) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (map == null) return Collections.emptySet();
+        return map.keySet();
     }
 
     /**
@@ -129,8 +127,8 @@ public class MapExercises {
      * @return a Collection containing all values, or empty collection if map is null
      */
     public <K, V> Collection<V> getAllValues(Map<K, V> map) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (map == null) return Collections.emptySet();
+        return map.values();
     }
 
     /**
@@ -147,9 +145,8 @@ public class MapExercises {
      * @return count of entries where value > threshold, or 0 if map is null
      */
     public int countEntriesAboveThreshold(Map<String, Integer> map, int threshold) {
-        // TODO: Implement this method
-        // Hint: Use entrySet() and iterate through entries
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (map == null) return 0;
+        return map.values().stream().filter(v -> v > threshold).mapToInt(v -> 1).sum();
     }
 
     // ==================== TREEMAP & ORDERING ====================
@@ -167,8 +164,15 @@ public class MapExercises {
      * @throws IllegalArgumentException if arrays are null or have different lengths
      */
     public Map<String, Integer> createSortedMap(String[] keys, Integer[] values) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (keys == null || values == null || keys.length != values.length) {
+            throw new IllegalArgumentException();
+        }
+        Map<String, Integer> map = new TreeMap<>();
+        for (int i = 0; i < keys.length; i++) {
+            map.put(keys[i], values[i]);
+        }
+
+        return map;
     }
 
     /**
@@ -184,7 +188,9 @@ public class MapExercises {
      * @throws IllegalArgumentException if map is null or empty
      */
     public String getFirstAndLastKey(TreeMap<Integer, String> map) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (map == null || map.isEmpty()) throw new IllegalArgumentException();
+        Integer first = map.firstKey();
+        Integer last = map.lastKey();
+        return String.format("first:%d,last:%d", first, last);
     }
 }

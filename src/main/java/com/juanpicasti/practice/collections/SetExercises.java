@@ -1,9 +1,6 @@
 package com.juanpicasti.practice.collections;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Set Exercises - HashSet and TreeSet
@@ -28,8 +25,7 @@ public class SetExercises {
      * @return a HashSet containing unique elements
      */
     public Set<String> createHashSet(String... elements) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new HashSet<>(List.of(elements));
     }
 
     /**
@@ -45,8 +41,8 @@ public class SetExercises {
      * @throws IllegalArgumentException if set is null
      */
     public <T> boolean addElementToSet(Set<T> set, T element) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (set == null) throw new IllegalArgumentException();
+        return set.add(element);
     }
 
     /**
@@ -61,8 +57,8 @@ public class SetExercises {
      * @return true if set contains element, false otherwise (or if set is null)
      */
     public <T> boolean containsElement(Set<T> set, T element) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (set == null) return false;
+        return set.contains(element);
     }
 
     /**
@@ -77,8 +73,8 @@ public class SetExercises {
      * @throws IllegalArgumentException if set is null
      */
     public <T> boolean removeElement(Set<T> set, T element) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (set == null) throw new IllegalArgumentException();
+        return set.remove(element);
     }
 
     // ==================== TREESET & ORDERING ====================
@@ -95,8 +91,7 @@ public class SetExercises {
      * @return a TreeSet containing elements in sorted (ascending) order
      */
     public Set<Integer> createSortedSet(Integer... elements) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new TreeSet<>(Arrays.asList(elements));
     }
 
     /**
@@ -110,9 +105,9 @@ public class SetExercises {
      * @return a TreeSet sorted in reverse alphabetical order (Z to A)
      */
     public Set<String> createReverseOrderSet(String... elements) {
-        // TODO: Implement this method
-        // Hint: Use Comparator.reverseOrder() or (a, b) -> b.compareTo(a)
-        throw new UnsupportedOperationException("Not implemented yet");
+        Set<String> set = new TreeSet<>(Comparator.reverseOrder());
+        set.addAll(Arrays.asList(elements));
+        return set;
     }
 
     // ==================== SET OPERATIONS ====================
@@ -130,8 +125,12 @@ public class SetExercises {
      * @throws IllegalArgumentException if either set is null
      */
     public <T> Set<T> findIntersection(Set<T> set1, Set<T> set2) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (set1 == null || set2 == null) {
+            throw new IllegalArgumentException();
+        }
+        Set<T> set1Copy = new HashSet<>(set1);
+        set1Copy.retainAll(set2);
+        return set1Copy;
     }
 
     /**
@@ -147,8 +146,12 @@ public class SetExercises {
      * @throws IllegalArgumentException if either set is null
      */
     public <T> Set<T> findUnion(Set<T> set1, Set<T> set2) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (set1 == null || set2 == null) {
+            throw new IllegalArgumentException();
+        }
+        Set<T> set1Copy = new HashSet<>(set1);
+        set1Copy.addAll(set2);
+        return set1Copy;
     }
 
     /**
@@ -164,8 +167,12 @@ public class SetExercises {
      * @throws IllegalArgumentException if either set is null
      */
     public <T> Set<T> findDifference(Set<T> set1, Set<T> set2) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (set1 == null || set2 == null) {
+            throw new IllegalArgumentException();
+        }
+        Set<T> set1Copy = new HashSet<>(set1);
+        set1Copy.removeAll(set2);
+        return set1Copy;
     }
 
     // ==================== NULL HANDLING ====================
@@ -182,8 +189,12 @@ public class SetExercises {
      * @return a set that contains a null element
      */
     public Set<String> createSetWithNull(boolean useHashSet) {
-        // TODO: Implement this method
-        // For TreeSet, use Comparator.nullsFirst(Comparator.naturalOrder())
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (useHashSet) {
+            return new HashSet<>(Collections.singletonList(null));
+        } else {
+            Set<String> ts = new TreeSet<>(Comparator.nullsFirst(Comparator.naturalOrder()));
+            ts.add(null);
+            return ts;
+        }
     }
 }
