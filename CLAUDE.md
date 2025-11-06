@@ -4,11 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Java practice playground repository designed for learning Java programming concepts through progressive exercises. It contains three main learning modules with comprehensive test coverage:
+This is a Java practice playground repository designed for learning Java programming concepts through progressive exercises. It contains four main learning modules with comprehensive test coverage:
 
 - **Strings Module**: 18 exercises covering String manipulation methods
 - **Collections Module**: 38 exercises covering Lists, Sets, Maps, Queues, and advanced collections
 - **Streams Module**: 33 exercises covering Java Stream API and functional programming
+- **Sorting Module**: 37 exercises covering Comparable, Comparator, and advanced sorting techniques
 
 Each module follows a test-driven learning approach where exercises are implemented to make failing tests pass.
 
@@ -30,16 +31,21 @@ mvn test
 mvn test -Dtest=StringExercisesTest
 mvn test -Dtest="*collections*"
 mvn test -Dtest=StreamExercisesTest
+mvn test -Dtest="*sorting*"
 
 # Run individual exercise class tests
 mvn test -Dtest=ListExercisesTest
 mvn test -Dtest=SetExercisesTest
 mvn test -Dtest=MapExercisesTest
 mvn test -Dtest=AdvancedCollectionsExercisesTest
+mvn test -Dtest=ComparableExercisesTest
+mvn test -Dtest=ComparatorExercisesTest
+mvn test -Dtest=AdvancedSortingExercisesTest
 
 # Run specific test methods
 mvn test -Dtest=StringExercisesTest#testGetStringLength*
 mvn test -Dtest=StreamExercisesTest#testCount*
+mvn test -Dtest=ComparableExercisesTest#testCreateComparableString*
 ```
 
 ### Build Operations
@@ -66,7 +72,8 @@ mvn clean test
 com.juanpicasti.practice/
 ├── strings/          # String manipulation exercises
 ├── collections/      # Collections Framework exercises
-└── streams/          # Stream API exercises
+├── streams/          # Stream API exercises
+└── sorting/          # Comparable, Comparator, and sorting exercises
 ```
 
 Each package contains:
@@ -104,6 +111,13 @@ All exercise classes follow a consistent pattern:
 - Method reference exercises (static, instance, constructor)
 - Real-world scenarios with custom objects (Person, Product classes)
 
+**Sorting Module**:
+- Split into three classes: `ComparableExercises`, `ComparatorExercises`, `AdvancedSortingExercises`
+- Covers natural ordering with Comparable, custom comparison with Comparator
+- Includes comparator chaining, null handling, TreeSet/TreeMap, and multi-level sorting
+- Exercises with Person, Product, Book, and Employee domain objects
+- Emphasizes overflow-safe comparison and builder patterns for complex comparators
+
 ## Working with This Repository
 
 When implementing exercises:
@@ -122,6 +136,6 @@ When debugging test failures:
 
 ## Test Statistics
 
-- **Total Exercises**: 89 across all modules
-- **Total Test Cases**: 280+
+- **Total Exercises**: 126 across all modules (18 Strings + 38 Collections + 33 Streams + 37 Sorting)
+- **Total Test Cases**: 400+
 - **Coverage**: Every exercise has comprehensive edge case testing
