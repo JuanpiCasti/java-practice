@@ -1,7 +1,6 @@
 package com.juanpicasti.practice.sorting;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Comparable Exercises
@@ -31,9 +30,7 @@ public class ComparableExercises {
      * @return a new ComparableString instance
      */
     public ComparableString createComparableString(String value) {
-        // TODO: Implement this method
-        // Hint: Create an inner class ComparableString that implements Comparable
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new ComparableString(value);
     }
 
     /**
@@ -54,9 +51,7 @@ public class ComparableExercises {
      * @return a new ComparablePerson instance
      */
     public ComparablePerson createComparablePersonByName(String name, int age, double salary) {
-        // TODO: Implement this method
-        // Hint: compareTo() should compare names using String's compareTo()
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new ComparablePerson(name, age, salary);
     }
 
     /**
@@ -77,9 +72,7 @@ public class ComparableExercises {
      * @return a new ComparablePerson2 instance
      */
     public ComparablePerson2 createComparablePersonByNameThenAge(String name, int age, double salary) {
-        // TODO: Implement this method
-        // Hint: First compare names; if equal (== 0), then compare ages
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new ComparablePerson2(name, age, salary);
     }
 
     /**
@@ -100,9 +93,7 @@ public class ComparableExercises {
      * @return a new ComparableProduct instance
      */
     public ComparableProduct createComparableProductByPrice(String name, double price, double rating) {
-        // TODO: Implement this method
-        // Hint: Use Double.compare(this.price, other.price) to safely compare doubles
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new ComparableProduct(name, price, rating);
     }
 
     // ==================== NULL HANDLING ====================
@@ -124,9 +115,7 @@ public class ComparableExercises {
      * @return a new NullableComparableString instance
      */
     public NullableComparableString createNullableComparableString(String value) {
-        // TODO: Implement this method
-        // Hint: Handle null cases first: if both null return 0, if this null return -1, if other null return 1
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new NullableComparableString(value);
     }
 
     // ==================== USING COMPARABLE IN COLLECTIONS ====================
@@ -150,9 +139,7 @@ public class ComparableExercises {
      * @return a new ComparableBook instance
      */
     public ComparableBook createComparableBookByYear(String title, String author, int year, int pages) {
-        // TODO: Implement this method
-        // Hint: Use Integer.compare(this.year, other.year) for safe integer comparison
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new ComparableBook(title, author, year, pages);
     }
 
     /**
@@ -171,9 +158,8 @@ public class ComparableExercises {
      * @throws IllegalArgumentException if people is null
      */
     public void sortComparablePersons(List<ComparablePerson> people) {
-        // TODO: Implement this method
-        // Hint: Use Collections.sort() - it uses the natural ordering for Comparable objects
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (people == null) throw new IllegalArgumentException();
+        people.sort(Comparator.naturalOrder());
     }
 
     /**
@@ -193,9 +179,8 @@ public class ComparableExercises {
      * @throws IllegalArgumentException if products is null
      */
     public Set<ComparableProduct> createSortedProductSet(ComparableProduct[] products) {
-        // TODO: Implement this method
-        // Hint: Create a TreeSet and add all products; TreeSet maintains sorted order automatically
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (products == null) throw new IllegalArgumentException();
+        return new TreeSet<>(Arrays.asList(products));
     }
 
     // ==================== ADVANCED COMPARABLE ====================
@@ -217,9 +202,7 @@ public class ComparableExercises {
      * @return a new ComparableInteger instance with overflow-safe comparison
      */
     public ComparableInteger createSafeComparableInteger(int value) {
-        // TODO: Implement this method
-        // Hint: Use Integer.compare() instead of subtraction to avoid overflow
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new ComparableInteger(value);
     }
 
     /**
@@ -239,9 +222,7 @@ public class ComparableExercises {
      * @return a new ReversePerson instance with reverse natural ordering
      */
     public ReversePerson createReversePersonByAge(String name, int age) {
-        // TODO: Implement this method
-        // Hint: Reverse the comparison by swapping the comparison order or negating the result
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new ReversePerson(name, age);
     }
 
     // ==================== INNER CLASSES (to be implemented in exercises) ====================
@@ -263,8 +244,7 @@ public class ComparableExercises {
 
         @Override
         public int compareTo(ComparableString other) {
-            // TODO: Implement natural ordering (alphabetical)
-            throw new UnsupportedOperationException("Not implemented yet");
+            return this.value.compareTo(other.getValue());
         }
 
         @Override
@@ -302,8 +282,7 @@ public class ComparableExercises {
 
         @Override
         public int compareTo(ComparablePerson other) {
-            // TODO: Implement comparison by name
-            throw new UnsupportedOperationException("Not implemented yet");
+            return this.name.compareTo(other.getName());
         }
 
         @Override
@@ -341,8 +320,9 @@ public class ComparableExercises {
 
         @Override
         public int compareTo(ComparablePerson2 other) {
-            // TODO: Implement comparison by name, then age
-            throw new UnsupportedOperationException("Not implemented yet");
+            int nameComparison = this.name.compareTo(other.getName());
+            if (nameComparison != 0) return nameComparison;
+            else return Integer.compare(this.getAge(), other.getAge());
         }
 
         @Override
@@ -380,8 +360,7 @@ public class ComparableExercises {
 
         @Override
         public int compareTo(ComparableProduct other) {
-            // TODO: Implement comparison by price
-            throw new UnsupportedOperationException("Not implemented yet");
+            return Double.compare(this.getPrice(), other.getPrice());
         }
 
         @Override
@@ -407,8 +386,11 @@ public class ComparableExercises {
 
         @Override
         public int compareTo(NullableComparableString other) {
-            // TODO: Implement null-safe comparison (nulls first)
-            throw new UnsupportedOperationException("Not implemented yet");
+            if (this.getValue() == null && other.getValue() == null)  return 0;
+            else if (this.getValue() == null) return -1;
+            else if (other.getValue() == null) return 1;
+
+            return this.getValue().compareTo(other.getValue());
         }
 
         @Override
@@ -452,8 +434,7 @@ public class ComparableExercises {
 
         @Override
         public int compareTo(ComparableBook other) {
-            // TODO: Implement comparison by year
-            throw new UnsupportedOperationException("Not implemented yet");
+            return Integer.compare(this.getYear(), other.getYear());
         }
 
         @Override
@@ -479,8 +460,7 @@ public class ComparableExercises {
 
         @Override
         public int compareTo(ComparableInteger other) {
-            // TODO: Implement overflow-safe comparison
-            throw new UnsupportedOperationException("Not implemented yet");
+            return Integer.compare(this.getValue(), other.getValue());
         }
 
         @Override
@@ -512,8 +492,7 @@ public class ComparableExercises {
 
         @Override
         public int compareTo(ReversePerson other) {
-            // TODO: Implement reverse comparison by age (descending)
-            throw new UnsupportedOperationException("Not implemented yet");
+            return Integer.compare(other.getAge(), this.getAge());
         }
 
         @Override

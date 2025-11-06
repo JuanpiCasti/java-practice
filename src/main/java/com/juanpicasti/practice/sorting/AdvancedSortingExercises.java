@@ -2,6 +2,7 @@ package com.juanpicasti.practice.sorting;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Advanced Sorting Exercises
@@ -31,9 +32,10 @@ public class AdvancedSortingExercises {
      * @throws IllegalArgumentException if people is null
      */
     public void sortBySalaryUsingCollections(List<Person> people) {
-        // TODO: Implement this method
-        // Hint: Collections.sort(list, comparator)
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (people == null) {
+            throw new IllegalArgumentException();
+        }
+        people.sort(Comparator.comparing(Person::getSalary));
     }
 
     /**
@@ -52,9 +54,10 @@ public class AdvancedSortingExercises {
      * @throws IllegalArgumentException if products is null
      */
     public void sortByRatingUsingArrays(Product[] products) {
-        // TODO: Implement this method
-        // Hint: Arrays.sort(array, comparator) with descending rating
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (products == null) {
+            throw new IllegalArgumentException();
+        }
+        Arrays.sort(products, Comparator.comparing(Product::getRating).reversed());
     }
 
     /**
@@ -73,9 +76,10 @@ public class AdvancedSortingExercises {
      * @throws IllegalArgumentException if books is null
      */
     public void sortByYearUsingListSort(List<Book> books) {
-        // TODO: Implement this method
-        // Hint: books.sort(Comparator.comparing(Book::getYear))
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (books == null) {
+            throw new IllegalArgumentException();
+        }
+        books.sort(Comparator.comparingInt(Book::getYear));
     }
 
     // ==================== TREESET AND TREEMAP ====================
@@ -97,9 +101,12 @@ public class AdvancedSortingExercises {
      * @throws IllegalArgumentException if employees is null
      */
     public Set<Employee> createEmployeeSetSortedByName(Employee[] employees) {
-        // TODO: Implement this method
-        // Hint: new TreeSet<>(comparator) then addAll
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (employees == null) {
+            throw new IllegalArgumentException();
+        }
+        Set<Employee> ts = new TreeSet<>(Comparator.comparing(Employee::getName));
+        ts.addAll(Arrays.asList(employees));
+        return ts;
     }
 
     /**
@@ -119,9 +126,12 @@ public class AdvancedSortingExercises {
      * @throws IllegalArgumentException if personDeptMap is null
      */
     public Map<Person, String> createPersonMapSortedByAge(Map<Person, String> personDeptMap) {
-        // TODO: Implement this method
-        // Hint: new TreeMap<>(comparator) then putAll
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (personDeptMap == null) {
+            throw new IllegalArgumentException();
+        }
+        Map<Person, String> tm = new TreeMap<>(Comparator.comparing(Person::getAge));
+        tm.putAll(personDeptMap);
+        return tm;
     }
 
     // ==================== COMPLEX CHAINING ====================
@@ -144,9 +154,10 @@ public class AdvancedSortingExercises {
      * @return a Comparator with four-level comparison
      */
     public Comparator<Employee> createFourLevelEmployeeComparator() {
-        // TODO: Implement this method
-        // Hint: Chain with .thenComparing() three times
-        throw new UnsupportedOperationException("Not implemented yet");
+        return Comparator.comparing(Employee::getDepartment)
+                .thenComparing(Employee::getSalary, Comparator.reverseOrder())
+                .thenComparing(Employee::getName)
+                .thenComparing(Employee::getId);
     }
 
     /**
@@ -167,9 +178,11 @@ public class AdvancedSortingExercises {
      * @throws IllegalArgumentException if products is null
      */
     public void sortProductsConditionally(List<Product> products, boolean sortByPrice) {
-        // TODO: Implement this method
-        // Hint: Create different comparators based on the flag
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (products == null) throw new IllegalArgumentException();
+        var comparator = sortByPrice ?
+                Comparator.comparing(Product::getPrice).thenComparing(Product::getRating, Comparator.reverseOrder()) :
+                Comparator.comparing(Product::getRating, Comparator.reverseOrder()).thenComparing(Product::getPrice);
+        products.sort(comparator);
     }
 
     // ==================== STABILITY AND DERIVED VALUES ====================
@@ -195,9 +208,10 @@ public class AdvancedSortingExercises {
      * @throws IllegalArgumentException if people is null
      */
     public boolean sortByAgeAndVerifyStability(List<Person> people) {
-        // TODO: Implement this method
-        // Hint: Sort by age and return true (Java's sort is guaranteed stable)
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (people == null) throw new IllegalArgumentException();
+        // TODO: Implement validation
+        people.sort(Comparator.comparing(Person::getAge));
+        return true;
     }
 
     /**
@@ -218,9 +232,14 @@ public class AdvancedSortingExercises {
      * @throws IllegalArgumentException if books is null
      */
     public void sortByValueDensity(List<Book> books, int currentYear) {
-        // TODO: Implement this method
-        // Hint: Use Comparator.comparing() with a lambda that calculates the density
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (books == null) {
+            throw new IllegalArgumentException();
+        }
+        books.sort((b1, b2) -> {
+            int yearsSinceB1 = currentYear - b1.getYear();
+            int yearsSinceB2 = currentYear - b2.getYear();
+            return Double.compare((double) b2.getPages() /yearsSinceB2, (double) b1.getPages() /yearsSinceB1);
+        });
     }
 
     /**
@@ -241,9 +260,12 @@ public class AdvancedSortingExercises {
      * @throws IllegalArgumentException if employees is null
      */
     public Map<String, List<Employee>> groupByDepartmentAndSortBySalary(List<Employee> employees) {
-        // TODO: Implement this method
-        // Hint: Use streams with Collectors.groupingBy() or iterate and build map manually
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (employees == null) throw new IllegalArgumentException();
+        Map<String, List<Employee>> groups = employees.stream().collect(Collectors.groupingBy(Employee::getDepartment));
+        groups.values().forEach(g -> {
+            g.sort(Comparator.comparing(Employee::getSalary, Comparator.reverseOrder()));
+        });
+        return groups;
     }
 
     // ==================== REUSABLE PATTERNS ====================
@@ -270,9 +292,7 @@ public class AdvancedSortingExercises {
      * @return a new ComparatorFactory instance (or null if using static methods)
      */
     public ComparatorFactory createComparatorFactory() {
-        // TODO: Implement this method and the ComparatorFactory class
-        // Hint: Use static methods with generic type parameters
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new ComparatorFactory();
     }
 
     /**
@@ -295,9 +315,9 @@ public class AdvancedSortingExercises {
      * @throws IllegalArgumentException if people list itself is null
      */
     public void sortWithEdgeCaseHandling(List<Person> people) {
-        // TODO: Implement this method
-        // Hint: Use Comparator.nullsLast() for elements and field comparisons
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (people == null) throw new IllegalArgumentException();
+        people.sort(Comparator.nullsLast((p1, p2) -> Objects.compare(p1.getName(), p2.getName(), Comparator.nullsLast(Comparator.naturalOrder()))));
+
     }
 
     // ==================== PERFORMANCE OPTIMIZATION ====================
@@ -319,9 +339,8 @@ public class AdvancedSortingExercises {
      * @throws IllegalArgumentException if products is null
      */
     public void sortByScoreOptimized(List<Product> products) {
-        // TODO: Implement this method
-        // Hint: Comparator.comparingDouble() will cache the key extraction
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (products == null) throw new IllegalArgumentException();
+        products.sort(Comparator.comparingDouble(p -> p.getPrice() * p.getRating()));
     }
 
     // ==================== HELPER CLASSES ====================
@@ -342,7 +361,7 @@ public class AdvancedSortingExercises {
          * @return an ascending comparator
          */
         public static <T, U extends Comparable<? super U>> Comparator<T> ascending(Function<T, U> keyExtractor) {
-            throw new UnsupportedOperationException("Not implemented yet");
+            return Comparator.comparing(keyExtractor);
         }
 
         /**
@@ -354,7 +373,7 @@ public class AdvancedSortingExercises {
          * @return a descending comparator
          */
         public static <T, U extends Comparable<? super U>> Comparator<T> descending(Function<T, U> keyExtractor) {
-            throw new UnsupportedOperationException("Not implemented yet");
+            return Comparator.comparing(keyExtractor, Comparator.reverseOrder());
         }
 
         /**
@@ -366,7 +385,7 @@ public class AdvancedSortingExercises {
          * @return a null-safe ascending comparator
          */
         public static <T, U extends Comparable<? super U>> Comparator<T> nullSafeAscending(Function<T, U> keyExtractor) {
-            throw new UnsupportedOperationException("Not implemented yet");
+            return Comparator.nullsLast(Comparator.comparing(keyExtractor));
         }
     }
 }

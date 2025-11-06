@@ -1,5 +1,6 @@
 package com.juanpicasti.practice.sorting;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -29,9 +30,12 @@ public class ComparatorExercises {
      * @return a Comparator that compares Person objects by age
      */
     public Comparator<Person> createAgeComparator() {
-        // TODO: Implement this method
-        // Hint: Create a Comparator using an anonymous class or lambda
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                return Integer.compare(o1.getAge(), o2.getAge());
+            }
+        };
     }
 
     /**
@@ -49,9 +53,7 @@ public class ComparatorExercises {
      * @return a Comparator that compares Person objects by name
      */
     public Comparator<Person> createNameComparatorLambda() {
-        // TODO: Implement this method
-        // Hint: Use lambda: (p1, p2) -> p1.getName().compareTo(p2.getName())
-        throw new UnsupportedOperationException("Not implemented yet");
+        return (p1, p2) -> p1.getName().compareTo(p2.getName());
     }
 
     /**
@@ -69,9 +71,12 @@ public class ComparatorExercises {
      * @return a Comparator that compares Person objects by age (descending)
      */
     public Comparator<Person> createReversedAgeComparator() {
-        // TODO: Implement this method
-        // Hint: Create an age comparator first, then call .reversed() on it
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                return Integer.compare(o1.getAge(), o2.getAge());
+            }
+        }.reversed();
     }
 
     /**
@@ -89,9 +94,7 @@ public class ComparatorExercises {
      * @return a Comparator that compares Product objects by price
      */
     public Comparator<Product> createPriceComparator() {
-        // TODO: Implement this method
-        // Hint: Use Comparator.comparing(Product::getPrice)
-        throw new UnsupportedOperationException("Not implemented yet");
+        return Comparator.comparingDouble(Product::getPrice);
     }
 
     // ==================== NULL HANDLING ====================
@@ -112,9 +115,7 @@ public class ComparatorExercises {
      * @return a null-safe Comparator that puts nulls first
      */
     public Comparator<Person> createNullsFirstNameComparator() {
-        // TODO: Implement this method
-        // Hint: Use Comparator.nullsFirst() with a name comparator
-        throw new UnsupportedOperationException("Not implemented yet");
+        return Comparator.nullsFirst(Comparator.comparing(Person::getName));
     }
 
     /**
@@ -133,9 +134,7 @@ public class ComparatorExercises {
      * @return a null-safe Comparator that puts nulls last
      */
     public Comparator<Product> createNullsLastPriceComparator() {
-        // TODO: Implement this method
-        // Hint: Use Comparator.nullsLast() with a price comparator
-        throw new UnsupportedOperationException("Not implemented yet");
+        return Comparator.nullsLast(Comparator.comparing(Product::getPrice));
     }
 
     // ==================== COMPARATOR CHAINING ====================
@@ -155,9 +154,7 @@ public class ComparatorExercises {
      * @return a Comparator that compares by name, then age
      */
     public Comparator<Person> createNameThenAgeComparator() {
-        // TODO: Implement this method
-        // Hint: Use Comparator.comparing(Person::getName).thenComparing(Person::getAge)
-        throw new UnsupportedOperationException("Not implemented yet");
+        return Comparator.comparing(Person::getName).thenComparing(Person::getAge);
     }
 
     /**
@@ -175,9 +172,10 @@ public class ComparatorExercises {
      * @return a Comparator that compares by department, salary (desc), then name
      */
     public Comparator<Employee> createDepartmentSalaryNameComparator() {
-        // TODO: Implement this method
-        // Hint: Chain three comparisons; use reversed() for descending salary
-        throw new UnsupportedOperationException("Not implemented yet");
+        return Comparator
+                .comparing(Employee::getDepartment)
+                .thenComparing(Comparator.comparingDouble(Employee::getSalary).reversed())
+                .thenComparing(Employee::getName);
     }
 
     // ==================== SPECIAL COMPARATORS ====================
@@ -197,9 +195,7 @@ public class ComparatorExercises {
      * @return a case-insensitive title Comparator for Book objects
      */
     public Comparator<Book> createCaseInsensitiveTitleComparator() {
-        // TODO: Implement this method
-        // Hint: Use Comparator.comparing(Book::getTitle, String.CASE_INSENSITIVE_ORDER)
-        throw new UnsupportedOperationException("Not implemented yet");
+        return Comparator.comparing(Book::getTitle, String.CASE_INSENSITIVE_ORDER);
     }
 
     /**
@@ -217,9 +213,7 @@ public class ComparatorExercises {
      * @return a Comparator for reverse alphabetical String ordering
      */
     public Comparator<String> createReverseAlphabeticalComparator() {
-        // TODO: Implement this method
-        // Hint: Use Comparator.reverseOrder() directly for Comparable types
-        throw new UnsupportedOperationException("Not implemented yet");
+        return Comparator.reverseOrder();
     }
 
     // ==================== ADVANCED COMPARATORS ====================
@@ -241,9 +235,18 @@ public class ComparatorExercises {
      * @return a Comparator with custom product sorting logic
      */
     public Comparator<Product> createCustomProductComparator() {
-        // TODO: Implement this method
-        // Hint: Compare by high-rating flag first, then price, then name
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                if (o1.getRating() >= 4.0 && o2.getRating() < 4.0) return -1;
+                else if (o2.getRating() >= 4.0 && o1.getRating() < 4.0) return 1;
+
+                int comparingPrice = Double.compare(o1.getPrice(), o2.getPrice());
+                if (comparingPrice != 0) return comparingPrice;
+
+                return o1.getName().compareTo(o2.getName());
+            }
+        };
     }
 
     /**
@@ -261,9 +264,7 @@ public class ComparatorExercises {
      * @return a Comparator that compares by author, then year
      */
     public Comparator<Book> createAuthorYearComparatorMethodRef() {
-        // TODO: Implement this method
-        // Hint: Use Book::getAuthor and Book::getYear method references
-        throw new UnsupportedOperationException("Not implemented yet");
+        return Comparator.comparing(Book::getAuthor).thenComparing(Book::getYear);
     }
 
     // ==================== PRACTICAL APPLICATIONS ====================
@@ -284,9 +285,10 @@ public class ComparatorExercises {
      * @throws IllegalArgumentException if products is null
      */
     public void sortProductsByPrice(List<Product> products) {
-        // TODO: Implement this method
-        // Hint: Use products.sort() with a price comparator
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (products == null) {
+            throw new IllegalArgumentException();
+        }
+        products.sort(Comparator.comparing(Product::getPrice));
     }
 
     /**
@@ -305,9 +307,8 @@ public class ComparatorExercises {
      * @return the person with the highest salary, or null if list is null/empty
      */
     public Person findHighestPaidPerson(List<Person> people) {
-        // TODO: Implement this method
-        // Hint: Use Collections.max() or stream().max() with a salary comparator
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (people == null || people.isEmpty()) return null;
+        return Collections.max(people, Comparator.comparing(Person::getSalary));
     }
 
     /**
@@ -334,9 +335,7 @@ public class ComparatorExercises {
      * @return a new PersonComparatorBuilder instance
      */
     public PersonComparatorBuilder createPersonComparatorBuilder() {
-        // TODO: Implement this method and the PersonComparatorBuilder class
-        // Hint: PersonComparatorBuilder should have a chain of comparators
-        throw new UnsupportedOperationException("Not implemented yet");
+        return new PersonComparatorBuilder();
     }
 
     // ==================== HELPER CLASSES ====================
@@ -346,43 +345,60 @@ public class ComparatorExercises {
      * Implements a fluent API for building complex Person comparators.
      */
     public static class PersonComparatorBuilder {
-        // TODO: Implement this class
-        // Hint: Store a Comparator<Person> and add to it with each method call
+        Comparator<Person> comparator;
+
+        Comparator<Person> lastComparator;
 
         public PersonComparatorBuilder byName() {
-            throw new UnsupportedOperationException("Not implemented yet");
+            this.lastComparator = Comparator.comparing(Person::getName);
+            return this;
         }
 
         public PersonComparatorBuilder byAge() {
-            throw new UnsupportedOperationException("Not implemented yet");
+            this.lastComparator = Comparator.comparing(Person::getAge);
+            return this;
         }
 
         public PersonComparatorBuilder bySalary() {
-            throw new UnsupportedOperationException("Not implemented yet");
+            this.lastComparator = Comparator.comparing(Person::getSalary);
+            return this;
         }
 
         public PersonComparatorBuilder ascending() {
-            throw new UnsupportedOperationException("Not implemented yet");
+            if (this.comparator != null) {
+                this.comparator = this.comparator.thenComparing(lastComparator);
+            } else {
+                this.comparator = lastComparator;
+            }
+            return this;
         }
 
         public PersonComparatorBuilder descending() {
-            throw new UnsupportedOperationException("Not implemented yet");
+            if (this.comparator != null) {
+                this.comparator = this.comparator.thenComparing(lastComparator.reversed());
+            } else {
+                this.comparator = lastComparator.reversed();
+            }
+            return this;
         }
 
         public PersonComparatorBuilder thenByName() {
-            throw new UnsupportedOperationException("Not implemented yet");
+            this.lastComparator = Comparator.comparing(Person::getName);
+            return this;
         }
 
         public PersonComparatorBuilder thenByAge() {
-            throw new UnsupportedOperationException("Not implemented yet");
+            this.lastComparator = Comparator.comparing(Person::getAge);
+            return this;
         }
 
         public PersonComparatorBuilder thenBySalary() {
-            throw new UnsupportedOperationException("Not implemented yet");
+            this.lastComparator = Comparator.comparing(Person::getSalary);
+            return this;
         }
 
         public Comparator<Person> build() {
-            throw new UnsupportedOperationException("Not implemented yet");
+            return this.comparator;
         }
     }
 }

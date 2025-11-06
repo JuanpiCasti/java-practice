@@ -79,8 +79,8 @@ public class StreamExercises {
      * @return the number of elements in the stream, or 0 if list is null
      */
     public long countElements(List<String> list) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (list == null) return 0;
+        return list.stream().count();
     }
 
     /**
@@ -95,8 +95,8 @@ public class StreamExercises {
      * @return list of numbers greater than threshold, or empty list if input is null
      */
     public List<Integer> filterGreaterThan(List<Integer> numbers, int threshold) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (numbers == null) return Collections.emptyList();
+        return numbers.stream().filter(i -> i> threshold).collect(Collectors.toList());
     }
 
     /**
@@ -110,8 +110,8 @@ public class StreamExercises {
      * @return list of uppercase strings, or empty list if input is null
      */
     public List<String> toUpperCase(List<String> strings) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (strings == null) return Collections.emptyList();
+        return strings.stream().map(String::toUpperCase).toList();
     }
 
     /**
@@ -125,8 +125,8 @@ public class StreamExercises {
      * @return set of unique numbers, or empty set if input is null
      */
     public Set<Integer> collectToSet(List<Integer> numbers) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (numbers == null) return Collections.emptySet();
+        return numbers.stream().collect(Collectors.toSet());
     }
 
     /**
@@ -141,8 +141,10 @@ public class StreamExercises {
      * @return count of strings with length > minLength, or 0 if input is null
      */
     public long countLongStrings(List<String> strings, int minLength) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (strings == null) return 0;
+        return strings.stream().filter(
+                s -> s.length() > minLength
+        ).count();
     }
 
     /**
@@ -156,8 +158,8 @@ public class StreamExercises {
      * @return true if any number equals target, false otherwise (or if list is null)
      */
     public boolean containsNumber(List<Integer> numbers, int target) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (numbers == null) return false;
+        return numbers.stream().anyMatch(i -> i == target);
     }
 
     /**
@@ -172,8 +174,8 @@ public class StreamExercises {
      * @return true if all numbers >= threshold, false otherwise (or if list is null)
      */
     public boolean allPositive(List<Integer> numbers, int threshold) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (numbers == null) return false;
+        return numbers.stream().allMatch(i -> i >= threshold);
     }
 
     /**
@@ -187,8 +189,8 @@ public class StreamExercises {
      * @return sum of all numbers, or 0 if list is null/empty
      */
     public int sumNumbers(List<Integer> numbers) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (numbers == null) return 0;
+        return numbers.stream().reduce(Integer::sum).orElse(0);
     }
 
     /**
@@ -204,8 +206,8 @@ public class StreamExercises {
      * @return Optional containing first string starting with prefix, or empty if none found
      */
     public Optional<String> findFirstStartingWith(List<String> strings, String prefix) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (strings == null) return Optional.empty();
+        return strings.stream().filter(s -> s.startsWith(prefix)).findFirst();
     }
 
     /**
@@ -219,8 +221,8 @@ public class StreamExercises {
      * @return list of distinct strings, or empty list if input is null
      */
     public List<String> getDistinct(List<String> strings) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (strings == null) return Collections.emptyList();
+        return strings.stream().distinct().toList();
     }
 
     // ==================== INTERMEDIATE LEVEL (Exercises 11-22) ====================
@@ -236,8 +238,8 @@ public class StreamExercises {
      * @return list of parsed integers, or empty list if input is null
      */
     public List<Integer> parseIntegers(List<String> strings) {
-        // TODO: Implement this method using Integer::parseInt
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (strings == null) return Collections.emptyList();
+        return strings.stream().map(Integer::parseInt).toList();
     }
 
     /**
@@ -251,8 +253,8 @@ public class StreamExercises {
      * @return list of lowercase strings, or empty list if input is null
      */
     public List<String> toLowerCaseMethodRef(List<String> strings) {
-        // TODO: Implement this method using String::toLowerCase method reference
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (strings == null) return new ArrayList<>();
+        return strings.stream().map(String::toLowerCase).collect(Collectors.toList());
     }
 
     /**
@@ -268,9 +270,8 @@ public class StreamExercises {
      * @return list of Person objects, or empty list if names is null
      */
     public List<Person> createPersons(List<String> names, int defaultAge, String defaultCity) {
-        // TODO: Implement this method
-        // Hint: Use map with lambda that creates new Person(name, defaultAge, defaultCity)
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (names == null) return new ArrayList<>();
+        return names.stream().map(n -> new Person(n ,defaultAge, defaultCity)).collect(Collectors.toList());
     }
 
     /**
@@ -284,8 +285,8 @@ public class StreamExercises {
      * @return flattened list, or empty list if input is null
      */
     public List<Integer> flattenLists(List<List<Integer>> listOfLists) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (listOfLists == null) return new ArrayList<>();
+        return listOfLists.stream().flatMap(Collection::stream).collect(Collectors.toList());
     }
 
     /**
@@ -302,8 +303,8 @@ public class StreamExercises {
      * @return list of names, or empty list if persons is null
      */
     public List<String> getNamesOfAdults(List<Person> persons, int minAge) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (persons == null) return new ArrayList<>();
+        return persons.stream().filter(p -> p.age > minAge).map(Person::getName).collect(Collectors.toList());
     }
 
     /**
@@ -317,9 +318,8 @@ public class StreamExercises {
      * @return list sorted by age (ascending), or empty list if input is null
      */
     public List<Person> sortByAge(List<Person> persons) {
-        // TODO: Implement this method
-        // Hint: Use Comparator.comparingInt(Person::getAge)
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (persons == null) return new ArrayList<>();
+        return persons.stream().sorted(Comparator.comparing(Person::getAge)).collect(Collectors.toList());
     }
 
     /**
@@ -334,9 +334,8 @@ public class StreamExercises {
      * @return list of numbers doubled, or empty list if input is null
      */
     public List<Integer> doubleWithPeek(List<Integer> numbers, java.util.function.Consumer<Integer> consumer) {
-        // TODO: Implement this method
-        // Use peek(consumer) before map
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (numbers == null) return new ArrayList<>();
+        return numbers.stream().peek(consumer).map(i -> i * 2).collect(Collectors.toList());
     }
 
     /**
@@ -352,9 +351,8 @@ public class StreamExercises {
      * @return list of elements for the specified page, or empty list if input is null
      */
     public List<String> paginate(List<String> list, int page, int pageSize) {
-        // TODO: Implement this method
-        // Skip page * pageSize elements, then limit to pageSize
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (list == null) return new ArrayList<>();
+        return list.stream().skip(page * pageSize).limit(pageSize).collect(Collectors.toList());
     }
 
     /**
@@ -368,8 +366,8 @@ public class StreamExercises {
      * @return Map with city as key and list of persons from that city, or empty map if input is null
      */
     public Map<String, List<Person>> groupByCity(List<Person> persons) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (persons == null) return new HashMap<>();
+        return persons.stream().collect(Collectors.groupingBy(Person::getCity));
     }
 
     /**
@@ -384,8 +382,11 @@ public class StreamExercises {
      * @return Map with true/false keys, values are lists of numbers >= threshold (true) or < threshold (false)
      */
     public Map<Boolean, List<Integer>> partitionByThreshold(List<Integer> numbers, int threshold) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (numbers==null) return Map.of(
+                true, new ArrayList<>(),
+                false, new ArrayList<>()
+        );
+        return numbers.stream().collect(Collectors.partitioningBy(n -> n>= threshold));
     }
 
     /**
@@ -400,8 +401,8 @@ public class StreamExercises {
      * @return joined string, or empty string if input is null
      */
     public String joinStrings(List<String> strings, String delimiter) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (strings == null) return "";
+        return strings.stream().collect(Collectors.joining(delimiter));
     }
 
     /**
@@ -415,8 +416,8 @@ public class StreamExercises {
      * @return true if no number is negative, false otherwise (or if list is null)
      */
     public boolean noneNegative(List<Integer> numbers) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (numbers == null) return false;
+        return numbers.stream().noneMatch(i -> i < 0);
     }
 
     // ==================== ADVANCED LEVEL (Exercises 23-33) ====================
@@ -432,8 +433,10 @@ public class StreamExercises {
      * @return Map with name as key and age as value, or empty map if input is null
      */
     public Map<String, Integer> personNameToAge(List<Person> persons) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (persons == null) return new HashMap<>();
+        return persons.stream().collect(Collectors.toMap(
+                Person::getName, Person::getAge
+        ));
     }
 
     /**
@@ -447,8 +450,10 @@ public class StreamExercises {
      * @return IntSummaryStatistics for ages, or null if input is null
      */
     public IntSummaryStatistics getAgeStatistics(List<Person> persons) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (persons == null) return null;
+        return persons.stream().collect(Collectors.summarizingInt(
+                p -> p.age
+        ));
     }
 
     /**
@@ -464,8 +469,8 @@ public class StreamExercises {
      * @return product of all numbers, or 1 if list is null/empty
      */
     public int productOfNumbers(List<Integer> numbers) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (numbers == null) return 1;
+        return numbers.stream().reduce(1, (a, b) -> a*b);
     }
 
     /**
@@ -479,9 +484,8 @@ public class StreamExercises {
      * @return Map with city as key and count of persons from that city, or empty map if input is null
      */
     public Map<String, Long> countPersonsByCity(List<Person> persons) {
-        // TODO: Implement this method
-        // Hint: Use groupingBy(Person::getCity, counting())
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (persons == null) return new HashMap<>();
+        return persons.stream().collect(Collectors.groupingBy(Person::getCity, Collectors.counting()));
     }
 
     /**
@@ -497,9 +501,9 @@ public class StreamExercises {
      * @return list of all individual characters, or empty list if input is null
      */
     public List<Character> getAllCharacters(List<String> strings) {
-        // TODO: Implement this method
-        // Hint: flatMap each string to chars().mapToObj(c -> (char) c)
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (strings == null) return new ArrayList<>();
+        return strings.stream()
+                .flatMap(s -> s.chars().mapToObj(c -> (char) c)).collect(Collectors.toList());
     }
 
     /**
@@ -515,9 +519,12 @@ public class StreamExercises {
      * @return age of person with given name, or -1 if not found or input is null
      */
     public int getAgeByName(List<Person> persons, String name) {
-        // TODO: Implement this method
-        // Find person by name, map to age, return -1 if not found
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (persons == null) return -1;
+        return persons.stream()
+                .filter(p -> p.getName().equals(name))
+                .findFirst()
+                .map(Person::getAge)
+                .orElse(-1);
     }
 
     /**
@@ -533,8 +540,8 @@ public class StreamExercises {
      * @return sum of all product prices, or 0.0 if input is null
      */
     public double getTotalPrice(List<Product> products) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (products == null) return 0;
+        return products.stream().reduce((double) 0, (Double accum, Product p2) -> accum +p2.getPrice(), Double::sum);
     }
 
     /**
@@ -550,9 +557,10 @@ public class StreamExercises {
      * @return nested Map: category → (price < 50 → list of products), or empty map if input is null
      */
     public Map<String, Map<Boolean, List<Product>>> groupByCategoryAndPrice(List<Product> products) {
-        // TODO: Implement this method
-        // Hint: groupingBy(Product::getCategory, partitioningBy(p -> p.getPrice() < 50))
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (products == null) return new HashMap<>();
+        return products.stream().collect(Collectors.groupingBy(Product::getCategory, Collectors.partitioningBy(
+                p -> p.getPrice()<50
+        )));
     }
 
     /**
@@ -566,8 +574,8 @@ public class StreamExercises {
      * @return Optional containing oldest person, or empty if list is null/empty
      */
     public Optional<Person> findOldestPerson(List<Person> persons) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (persons == null) return Optional.empty();
+        return persons.stream().max(Comparator.comparing(Person::getAge));
     }
 
     /**
@@ -581,8 +589,8 @@ public class StreamExercises {
      * @return average price of products, or 0.0 if input is null/empty
      */
     public double getAveragePrice(List<Product> products) {
-        // TODO: Implement this method
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (products == null) return 0.0;
+        return products.stream().collect(Collectors.averagingDouble(Product::getPrice));
     }
 
     /**
@@ -600,8 +608,8 @@ public class StreamExercises {
      * @return list of product names sorted by price, or empty list if input is null
      */
     public List<String> getAffordableProductNames(List<Product> products, String category, double maxPrice) {
-        // TODO: Implement this method
-        // Filter by category and price, sort by price, map to name
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (products == null) return new ArrayList<>();
+        return products.stream().filter(p -> category.equals(p.getCategory()) && p.getPrice() < maxPrice)
+                .map(Product::getName).collect(Collectors.toList());
     }
 }
